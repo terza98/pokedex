@@ -1,5 +1,5 @@
 import { Flex, Stack, useColorModeValue } from "@chakra-ui/react";
-import { FiBarChart2, FiHelpCircle, FiHome, FiUsers } from "react-icons/fi";
+import { FiHelpCircle, FiHome, FiUsers } from "react-icons/fi";
 import { NavButton } from "./NavButton";
 
 export const Sidebar = () => (
@@ -16,17 +16,8 @@ export const Sidebar = () => (
       <Stack justify="space-between" spacing="1">
         <Stack spacing={{ base: "5", sm: "6" }} shouldWrapChildren>
           <Stack spacing="1">
-            <NavButton label="Home" icon={FiHome} />
-            <NavButton
-              label="Dashboard"
-              icon={FiBarChart2}
-              aria-current="page"
-            />
+            <NavButton label="Home" aria-current="page" icon={FiHome} />
             <NavButton label="Profile" icon={FiUsers} />
-          </Stack>
-        </Stack>
-        <Stack spacing={{ base: "5", sm: "6" }}>
-          <Stack spacing="1">
             <NavButton label="Help" icon={FiHelpCircle} />
           </Stack>
         </Stack>

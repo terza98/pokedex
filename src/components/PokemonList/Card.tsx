@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FiHeart } from "react-icons/fi";
 import { getRandomColor, setFavoriteToLocalStorage } from "../../utils/helpers";
 
@@ -71,9 +71,7 @@ export const Card = (props: CardProps) => {
         onClick={() => addToFavorite(id)}
         icon={
           <FiHeart
-            fill={
-              isHovered || (isFavorite && !isHovered) ? "red" : "transparent"
-            }
+            fill={isFavorite || isHovered ? "red" : "transparent"}
             color="red"
           />
         }
@@ -90,7 +88,11 @@ export const Card = (props: CardProps) => {
         </Text>
         <Flex gap="5px">
           {traits?.map((trait) => (
-            <Box key={trait} bg={getRandomColor()} {...traitStyles}>
+            <Box
+              key={trait}
+              bg={useMemo(() => getRandomColor(), [0])}
+              {...traitStyles}
+            >
               <Text color="white">{trait}</Text>
             </Box>
           ))}
