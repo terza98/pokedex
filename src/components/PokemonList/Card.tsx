@@ -1,5 +1,5 @@
 import {
-  BoxProps,
+  FlexProps,
   Flex,
   Box,
   Image,
@@ -10,14 +10,27 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
+import { getRandomColor } from "../../utils/helpers";
 
 const traitStyles = {
   p: "2px 10px",
   borderRadius: 5,
 };
 
-export const Card = (props: BoxProps) => {
+interface CardProps extends FlexProps {
+  id: string;
+  name: string;
+  imageUrl: string;
+  traits: Array<string>;
+}
+
+export const Card = (props: CardProps) => {
+  const { id, name, imageUrl, traits } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const addToFavorite = (id: string) => {
+    localStorage.setItem("favorite", id);
+  };
 
   return (
     <Flex
@@ -47,13 +60,11 @@ export const Card = (props: BoxProps) => {
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={() => addToFavorite(id)}
         icon={<FiHeart fill={isHovered ? "red" : "transparent"} color="red" />}
       />
       <Link href="#">
-        <Image
-          cursor="pointer"
-          src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png"
-        />
+        <Image cursor="pointer" src={imageUrl} />
       </Link>
       <Flex
         flexDir="column"
@@ -63,18 +74,17 @@ export const Card = (props: BoxProps) => {
         mb="10px"
       >
         <Text color="grey" fontSize={12} fontWeight="bold">
-          #303
+          {id}
         </Text>
         <Text fontSize={20} mt={2}>
-          Bulbasaur
+          {name}
         </Text>
         <Flex gap="5px">
-          <Box bg="green" {...traitStyles}>
-            <Text color="white">Grass</Text>
-          </Box>
-          <Box bg="purple" {...traitStyles}>
-            <Text color="white">Poison</Text>
-          </Box>
+          {traits?.map((trait) => (
+            <Box key={trait} bg={getRandomColor()} {...traitStyles}>
+              <Text color="white">{trait}</Text>
+            </Box>
+          ))}
         </Flex>
       </Flex>
     </Flex>
