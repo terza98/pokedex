@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Flex,
   Heading,
   Icon,
   Input,
@@ -18,8 +17,6 @@ import { FiSearch } from "react-icons/fi";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import { Card } from "./Card";
-import { Navbar } from "./Navbar";
-import { Sidebar } from "./Sidebar";
 
 //mock API
 const mockApi = [
@@ -59,7 +56,6 @@ const mockApi = [
 ];
 
 export const PokemonList = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
   const [favorites, setFavorites] = useState<Array<string>>();
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
@@ -128,79 +124,69 @@ export const PokemonList = () => {
   };
 
   return (
-    <Flex
-      as="section"
-      maxW="1300px"
-      w="100%"
-      direction={{ base: "column", lg: "row" }}
-      bg="bg-canvas"
-      overflowY="auto"
-    >
-      {isDesktop ? <Sidebar /> : <Navbar />}
-      <Box bg="bg-surface" pt={{ base: "0", lg: "3" }} flex="1">
-        <Box
-          bg="bg-canvas"
-          borderTopLeftRadius={{ base: "none", lg: "2rem" }}
-          height="full"
-        >
-          <Container py="8" maxW="100%">
-            <Stack spacing={{ base: "8", lg: "6" }}>
-              <Stack
-                spacing="4"
-                direction={{ base: "column", lg: "row" }}
-                justify="space-between"
-                align={{ base: "start", lg: "center" }}
-              >
-                <Stack spacing="1">
-                  <Heading
-                    size={useBreakpointValue({ base: "xs", lg: "sm" })}
-                    fontWeight="medium"
-                  >
-                    Pokèdex
-                  </Heading>
-                  <Text color="muted">
-                    Search for a Pokémon by name or using its National Pokédex
-                    number.
-                  </Text>
-                </Stack>
-              </Stack>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <Icon as={FiSearch} color="muted" boxSize="5" />
-                </InputLeftElement>
-                <Input
-                  placeholder="Search"
-                  onKeyUp={(e) =>
-                    handleSearch((e.target as HTMLTextAreaElement).value)
-                  }
-                  variant={useColorModeValue("outline", "filled")}
-                />
-              </InputGroup>
-              <FilterContext.Provider value={handleFilterContextValue}>
-                <FiltersWithSort />
-              </FilterContext.Provider>
-              <Stack spacing={{ base: "5", lg: "6" }}>
-                <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
-                  {pokemons?.map((pokemon) => (
-                    <Card
-                      key={pokemon.name}
-                      id={pokemon.id}
-                      types={pokemon.types}
-                      name={pokemon.name}
-                      url={pokemon.url}
-                      imageUrl={pokemon.imageUrl}
-                      isFavoriteInStorage={
-                        favorites?.includes(pokemon.id) ? true : false
-                      }
-                    />
-                  ))}
-                </SimpleGrid>
+    <Box bg="bg-surface" pt={{ base: "0", lg: "3" }} flex="1">
+      <Box
+        bg="bg-canvas"
+        borderTopLeftRadius={{ base: "none", lg: "2rem" }}
+        height="full"
+      >
+        <Container py="8" maxW="100%">
+          <Stack spacing={{ base: "8", lg: "6" }}>
+            <Stack
+              spacing="4"
+              direction={{ base: "column", lg: "row" }}
+              justify="space-between"
+              align={{ base: "start", lg: "center" }}
+            >
+              <Stack spacing="1">
+                <Heading
+                  size={useBreakpointValue({ base: "xs", lg: "sm" })}
+                  fontWeight="medium"
+                >
+                  Pokèdex
+                </Heading>
+                <Text color="muted">
+                  Search for a Pokémon by name or using its National Pokédex
+                  number.
+                </Text>
               </Stack>
             </Stack>
-          </Container>
-        </Box>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <Icon as={FiSearch} color="muted" boxSize="5" />
+              </InputLeftElement>
+              <Input
+                placeholder="Search"
+                onKeyUp={(e) =>
+                  handleSearch((e.target as HTMLTextAreaElement).value)
+                }
+                variant={useColorModeValue("outline", "filled")}
+              />
+            </InputGroup>
+            <FilterContext.Provider value={handleFilterContextValue}>
+              <FiltersWithSort />
+            </FilterContext.Provider>
+            <Stack spacing={{ base: "5", lg: "6" }}>
+              <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
+                {pokemons?.map((pokemon) => (
+                  <Card
+                    key={pokemon.name}
+                    id={pokemon.id}
+                    types={pokemon.types}
+                    name={pokemon.name}
+                    url={pokemon.url}
+                    imageUrl={pokemon.imageUrl}
+                    isFavoriteInStorage={
+                      favorites?.includes(pokemon.id) ? true : false
+                    }
+                  />
+                ))}
+              </SimpleGrid>
+            </Stack>
+          </Stack>
+        </Container>
       </Box>
-    </Flex>
+    </Box>
   );
 };
 
