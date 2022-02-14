@@ -1,9 +1,9 @@
 import { BaseLayout } from "../components/BaseLayout";
-import { PokemonList } from "../components/PokemonList/PokemonList";
 
 const Index = () => (
   <BaseLayout>
-    <PokemonList />
+    If you have any problems or concerns about the website feel free to contact
+    me @: mladen@mladenterzic.com
   </BaseLayout>
 );
 
