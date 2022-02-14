@@ -66,7 +66,9 @@ export const PokemonList = () => {
   useEffect(() => {
     //check favorites from localstorage
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
-    setPokemons(mockApi);
+    setPokemons(
+      mockApi.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+    );
   }, []);
 
   const handleSearch = (query: string) => {
@@ -89,8 +91,40 @@ export const PokemonList = () => {
     );
   };
 
+  const handleSort = (value: string): void => {
+    const newPokemons = [...pokemons];
+    setPokemons(
+      newPokemons.sort((a, b) =>
+        value === "name-az"
+          ? a.name > b.name
+            ? 1
+            : b.name > a.name
+            ? -1
+            : 0
+          : value === "name-za"
+          ? a.name < b.name
+            ? 1
+            : b.name < a.name
+            ? -1
+            : 0
+          : value === "type-az"
+          ? a.types > b.types
+            ? 1
+            : b.types > a.types
+            ? -1
+            : 0
+          : value === "type-za" && a.types < b.types
+          ? 1
+          : b.types < a.types
+          ? -1
+          : 0
+      )
+    );
+  };
+
   const handleFilterContextValue: AppContextInterface = {
-    method: handleFilter,
+    filter: handleFilter,
+    sort: handleSort,
   };
 
   return (
@@ -171,7 +205,8 @@ export const PokemonList = () => {
 };
 
 interface AppContextInterface {
-  method: (types: Array<string>) => void;
+  filter: (types: Array<string>) => void;
+  sort: (value: string) => void;
 }
 
 export const FilterContext = createContext<AppContextInterface | null>(null);

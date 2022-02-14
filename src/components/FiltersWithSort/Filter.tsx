@@ -11,7 +11,7 @@ export const Filter = () => {
 
   const state = useFilterState({
     defaultValue: blueFilters.defaultValue,
-    onSubmit: filterContext.method,
+    onSubmit: filterContext.filter,
   });
   return (
     <Popover placement="bottom-start">
