@@ -1,7 +1,9 @@
 export const blueFilters = {
-  defaultValue: ["casio", "fossil"],
+  defaultValue: [""],
   options: [
     { label: "Bug", value: "bug" },
+    { label: "Grass", value: "grass" },
+    { label: "Poison", value: "poison" },
     { label: "Dragon", value: "dragon" },
     { label: "Fairy", value: "fairy" },
     { label: "Fire", value: "fire" },

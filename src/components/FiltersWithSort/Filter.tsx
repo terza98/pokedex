@@ -1,13 +1,17 @@
 import { Popover } from "@chakra-ui/react";
+import { useContext } from "react";
+import { FilterContext } from "../PokemonList/PokemonList";
 import { CheckboxFilter } from "./CheckboxFilter";
 import { FilterPopoverButton, FilterPopoverContent } from "./FilterPopover";
 import { useFilterState } from "./useFilterState";
 import { blueFilters } from "./_data";
 
-export const CheckboxFilterPopover = () => {
+export const Filter = () => {
+  const filterContext = useContext(FilterContext);
+
   const state = useFilterState({
     defaultValue: blueFilters.defaultValue,
-    onSubmit: console.log,
+    onSubmit: filterContext.method,
   });
   return (
     <Popover placement="bottom-start">

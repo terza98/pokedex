@@ -13,7 +13,7 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
@@ -79,6 +79,20 @@ export const PokemonList = () => {
     );
   };
 
+  const handleFilter = (types: Array<string>): void => {
+    setPokemons(
+      types.length > 1
+        ? mockApi.filter((pokemon) =>
+            pokemon.types.some((type) => types.includes(type.toLowerCase()))
+          )
+        : mockApi
+    );
+  };
+
+  const handleFilterContextValue: AppContextInterface = {
+    method: handleFilter,
+  };
+
   return (
     <Flex
       as="section"
@@ -128,7 +142,9 @@ export const PokemonList = () => {
                   variant={useColorModeValue("outline", "filled")}
                 />
               </InputGroup>
-              <FiltersWithSort />
+              <FilterContext.Provider value={handleFilterContextValue}>
+                <FiltersWithSort />
+              </FilterContext.Provider>
               <Stack spacing={{ base: "5", lg: "6" }}>
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
                   {pokemons?.map((pokemon) => (
@@ -153,3 +169,9 @@ export const PokemonList = () => {
     </Flex>
   );
 };
+
+interface AppContextInterface {
+  method: (types: Array<string>) => void;
+}
+
+export const FilterContext = createContext<AppContextInterface | null>(null);
