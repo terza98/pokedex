@@ -16,9 +16,14 @@ export const Sidebar = () => (
       <Stack justify="space-between" spacing="1">
         <Stack spacing={{ base: "5", sm: "6" }} shouldWrapChildren>
           <Stack spacing="1">
-            <NavButton label="Home" aria-current="page" icon={FiHome} />
-            <NavButton label="Profile" icon={FiUsers} />
-            <NavButton label="Help" icon={FiHelpCircle} />
+            <NavButton
+              label="Home"
+              href="/"
+              aria-current="page"
+              icon={FiHome}
+            />
+            <NavButton label="Profile" href="/profile" icon={FiUsers} />
+            <NavButton label="Help" href="/help" icon={FiHelpCircle} />
           </Stack>
         </Stack>
       </Stack>
