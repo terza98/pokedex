@@ -1,5 +1,4 @@
 import {
-  FlexProps,
   Flex,
   Box,
   Image,
@@ -10,6 +9,7 @@ import {
 import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 import { FiHeart } from "react-icons/fi";
+import { Pokemon } from "../../types/pokemon";
 import { getRandomColor, setFavoriteToLocalStorage } from "../../utils/helpers";
 
 const typeStyles = {
@@ -17,15 +17,9 @@ const typeStyles = {
   borderRadius: 5,
 };
 
-interface CardProps extends FlexProps {
-  id: string;
-  name: string;
-  imageUrl: string;
-  url: string;
+interface CardProps extends Pokemon {
   isFavoriteInStorage: boolean;
-  types: Array<string>;
 }
-
 export const Card = (props: CardProps) => {
   const { id, name, imageUrl, types, url, isFavoriteInStorage } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);

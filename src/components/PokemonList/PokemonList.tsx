@@ -15,13 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import { Card } from "./Card";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 
 //mock API
-const pokemons = [
+const mockApi = [
   {
     name: "Bulbasaur",
     id: "#001",
@@ -60,11 +61,23 @@ const pokemons = [
 export const PokemonList = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   const [favorites, setFavorites] = useState<Array<string>>();
+  const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
   useEffect(() => {
     //check favorites from localstorage
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
+    setPokemons(mockApi);
   }, []);
+
+  const handleSearch = (query: string) => {
+    setPokemons(
+      mockApi.filter(
+        (pokemon) =>
+          pokemon.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+          pokemon.id.toLowerCase().indexOf(query.toLowerCase()) > -1
+      )
+    );
+  };
 
   return (
     <Flex
@@ -109,6 +122,9 @@ export const PokemonList = () => {
                 </InputLeftElement>
                 <Input
                   placeholder="Search"
+                  onKeyUp={(e) =>
+                    handleSearch((e.target as HTMLTextAreaElement).value)
+                  }
                   variant={useColorModeValue("outline", "filled")}
                 />
               </InputGroup>
@@ -126,7 +142,6 @@ export const PokemonList = () => {
                       isFavoriteInStorage={
                         favorites?.includes(pokemon.id) ? true : false
                       }
-                      minH="sm"
                     />
                   ))}
                 </SimpleGrid>
