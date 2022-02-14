@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import { Card } from "./Card";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
@@ -111,6 +112,7 @@ export const PokemonList = () => {
                   variant={useColorModeValue("outline", "filled")}
                 />
               </InputGroup>
+              <FiltersWithSort />
               <Stack spacing={{ base: "5", lg: "6" }}>
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
                   {pokemons?.map((pokemon) => (
