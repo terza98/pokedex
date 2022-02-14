@@ -18,6 +18,38 @@ import { Card } from "./Card";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 
+//mock API
+const pokemons = [
+  {
+    name: "Bulbasaur",
+    id: "#001",
+    traits: ["Grass", "Poison"],
+    imageUrl:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
+  },
+  {
+    name: "Ivysaur",
+    id: "#002",
+    traits: ["Grass", "Poison"],
+    imageUrl:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
+  },
+  {
+    name: "Venusaur",
+    id: "#003",
+    traits: ["Grass", "Poison"],
+    imageUrl:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
+  },
+  {
+    name: "Charmander",
+    id: "#004",
+    traits: ["Fire"],
+    imageUrl:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
+  },
+];
+
 export const PokemonList = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
@@ -68,12 +100,18 @@ export const PokemonList = () => {
               </InputGroup>
               <Stack spacing={{ base: "5", lg: "6" }}>
                 <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
-                  <Card />
-                  <Card />
-                  <Card />
+                  {pokemons?.map((pokemon) => (
+                    <Card
+                      key={pokemon.name}
+                      id={pokemon.id}
+                      traits={pokemon.traits}
+                      name={pokemon.name}
+                      imageUrl={pokemon.imageUrl}
+                      minH="sm"
+                    />
+                  ))}
                 </SimpleGrid>
               </Stack>
-              <Card minH="sm" />
             </Stack>
           </Container>
         </Box>
