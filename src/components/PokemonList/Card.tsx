@@ -8,9 +8,9 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiHeart } from "react-icons/fi";
-import { getRandomColor } from "../../utils/helpers";
+import { getRandomColor, setFavoriteToLocalStorage } from "../../utils/helpers";
 
 const traitStyles = {
   p: "2px 10px",
@@ -21,16 +21,24 @@ interface CardProps extends FlexProps {
   id: string;
   name: string;
   imageUrl: string;
+  url: string;
+  isFavoriteInStorage: boolean;
   traits: Array<string>;
 }
 
 export const Card = (props: CardProps) => {
-  const { id, name, imageUrl, traits } = { ...props };
+  const { id, name, imageUrl, traits, url, isFavoriteInStorage } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInStorage);
 
   const addToFavorite = (id: string) => {
-    localStorage.setItem("favorite", id);
+    setFavoriteToLocalStorage(id);
+    setIsFavorite(isFavorite ? false : true);
   };
+
+  useEffect(() => {
+    setIsFavorite(isFavoriteInStorage);
+  }, [isFavoriteInStorage]);
 
   return (
     <Flex
@@ -61,18 +69,19 @@ export const Card = (props: CardProps) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => addToFavorite(id)}
-        icon={<FiHeart fill={isHovered ? "red" : "transparent"} color="red" />}
+        icon={
+          <FiHeart
+            fill={
+              isHovered || (isFavorite && !isHovered) ? "red" : "transparent"
+            }
+            color="red"
+          />
+        }
       />
-      <Link href="#">
-        <Image cursor="pointer" src={imageUrl} />
+      <Link href={url}>
+        <Image w="100%" cursor="pointer" src={imageUrl} />
       </Link>
-      <Flex
-        flexDir="column"
-        alignItems="flex-start"
-        w="100%"
-        maxW="150px"
-        mb="10px"
-      >
+      <Flex flexDir="column" alignItems="flex-start" w="100%" px={8} mb="10px">
         <Text color="grey" fontSize={12} fontWeight="bold">
           {id}
         </Text>

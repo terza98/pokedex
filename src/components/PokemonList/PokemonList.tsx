@@ -13,6 +13,7 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { Card } from "./Card";
 import { Navbar } from "./Navbar";
@@ -24,6 +25,7 @@ const pokemons = [
     name: "Bulbasaur",
     id: "#001",
     traits: ["Grass", "Poison"],
+    url: "#",
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
   },
@@ -31,12 +33,15 @@ const pokemons = [
     name: "Ivysaur",
     id: "#002",
     traits: ["Grass", "Poison"],
+    url: "#",
+
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
   },
   {
     name: "Venusaur",
     id: "#003",
+    url: "#",
     traits: ["Grass", "Poison"],
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
@@ -44,6 +49,7 @@ const pokemons = [
   {
     name: "Charmander",
     id: "#004",
+    url: "#",
     traits: ["Fire"],
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
@@ -52,6 +58,13 @@ const pokemons = [
 
 export const PokemonList = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const [favorites, setFavorites] = useState<Array<string>>();
+
+  useEffect(() => {
+    //check favorites from localstorage
+    setFavorites(JSON.parse(localStorage.getItem("favorites")));
+  }, []);
+
   return (
     <Flex
       as="section"
@@ -106,7 +119,11 @@ export const PokemonList = () => {
                       id={pokemon.id}
                       traits={pokemon.traits}
                       name={pokemon.name}
+                      url={pokemon.url}
                       imageUrl={pokemon.imageUrl}
+                      isFavoriteInStorage={
+                        favorites?.includes(pokemon.id) ? true : false
+                      }
                       minH="sm"
                     />
                   ))}
