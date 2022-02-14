@@ -36,7 +36,7 @@ export const PokemonList = () => {
           borderTopLeftRadius={{ base: "none", lg: "2rem" }}
           height="full"
         >
-          <Container py="8">
+          <Container py="8" maxW="100%">
             <Stack spacing={{ base: "8", lg: "6" }}>
               <Stack
                 spacing="4"
