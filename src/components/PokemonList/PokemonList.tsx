@@ -71,7 +71,7 @@ export const PokemonList = () => {
     );
   }, []);
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string): void => {
     setPokemons(
       mockApi.filter(
         (pokemon) =>
