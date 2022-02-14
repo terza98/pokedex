@@ -24,7 +24,7 @@ const pokemons = [
   {
     name: "Bulbasaur",
     id: "#001",
-    traits: ["Grass", "Poison"],
+    types: ["Grass", "Poison"],
     url: "#",
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
@@ -32,7 +32,7 @@ const pokemons = [
   {
     name: "Ivysaur",
     id: "#002",
-    traits: ["Grass", "Poison"],
+    types: ["Grass", "Poison"],
     url: "#",
 
     imageUrl:
@@ -42,7 +42,7 @@ const pokemons = [
     name: "Venusaur",
     id: "#003",
     url: "#",
-    traits: ["Grass", "Poison"],
+    types: ["Grass", "Poison"],
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
   },
@@ -50,7 +50,7 @@ const pokemons = [
     name: "Charmander",
     id: "#004",
     url: "#",
-    traits: ["Fire"],
+    types: ["Fire"],
     imageUrl:
       "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
   },
@@ -117,7 +117,7 @@ export const PokemonList = () => {
                     <Card
                       key={pokemon.name}
                       id={pokemon.id}
-                      traits={pokemon.traits}
+                      types={pokemon.types}
                       name={pokemon.name}
                       url={pokemon.url}
                       imageUrl={pokemon.imageUrl}

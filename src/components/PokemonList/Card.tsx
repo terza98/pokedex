@@ -12,7 +12,7 @@ import { useState, useEffect, useMemo } from "react";
 import { FiHeart } from "react-icons/fi";
 import { getRandomColor, setFavoriteToLocalStorage } from "../../utils/helpers";
 
-const traitStyles = {
+const typeStyles = {
   p: "2px 10px",
   borderRadius: 5,
 };
@@ -23,11 +23,11 @@ interface CardProps extends FlexProps {
   imageUrl: string;
   url: string;
   isFavoriteInStorage: boolean;
-  traits: Array<string>;
+  types: Array<string>;
 }
 
 export const Card = (props: CardProps) => {
-  const { id, name, imageUrl, traits, url, isFavoriteInStorage } = { ...props };
+  const { id, name, imageUrl, types, url, isFavoriteInStorage } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInStorage);
 
@@ -87,13 +87,13 @@ export const Card = (props: CardProps) => {
           {name}
         </Text>
         <Flex gap="5px">
-          {traits?.map((trait) => (
+          {types?.map((type) => (
             <Box
-              key={trait}
+              key={type}
               bg={useMemo(() => getRandomColor(), [0])}
-              {...traitStyles}
+              {...typeStyles}
             >
-              <Text color="white">{trait}</Text>
+              <Text color="white">{type}</Text>
             </Box>
           ))}
         </Flex>
