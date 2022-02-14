@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  SimpleGrid,
   Stack,
   Text,
   useBreakpointValue,
@@ -16,52 +15,14 @@ import { createContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
-import { Card } from "./Card";
-
-//mock API
-const mockApi = [
-  {
-    name: "Bulbasaur",
-    id: "#001",
-    types: ["Grass", "Poison"],
-    url: "#",
-    imageUrl:
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
-  },
-  {
-    name: "Ivysaur",
-    id: "#002",
-    types: ["Grass", "Poison"],
-    url: "#",
-
-    imageUrl:
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/002.png",
-  },
-  {
-    name: "Venusaur",
-    id: "#003",
-    url: "#",
-    types: ["Grass", "Poison"],
-    imageUrl:
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/003.png",
-  },
-  {
-    name: "Charmander",
-    id: "#004",
-    url: "#",
-    types: ["Fire"],
-    imageUrl:
-      "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/004.png",
-  },
-];
+import { CardGrid } from "./CardGrid";
+import { mockApi } from "./_data";
 
 export const PokemonList = () => {
-  const [favorites, setFavorites] = useState<Array<string>>();
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
   useEffect(() => {
     //check favorites from localstorage
-    setFavorites(JSON.parse(localStorage.getItem("favorites")));
     setPokemons(
       mockApi.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
     );
@@ -166,23 +127,7 @@ export const PokemonList = () => {
             <FilterContext.Provider value={handleFilterContextValue}>
               <FiltersWithSort />
             </FilterContext.Provider>
-            <Stack spacing={{ base: "5", lg: "6" }}>
-              <SimpleGrid columns={{ base: 1, md: 3 }} gap="6">
-                {pokemons?.map((pokemon) => (
-                  <Card
-                    key={pokemon.name}
-                    id={pokemon.id}
-                    types={pokemon.types}
-                    name={pokemon.name}
-                    url={pokemon.url}
-                    imageUrl={pokemon.imageUrl}
-                    isFavoriteInStorage={
-                      favorites?.includes(pokemon.id) ? true : false
-                    }
-                  />
-                ))}
-              </SimpleGrid>
-            </Stack>
+            <CardGrid pokemons={pokemons} />
           </Stack>
         </Container>
       </Box>
