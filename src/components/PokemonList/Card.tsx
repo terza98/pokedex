@@ -19,7 +19,7 @@ const typeStyles = {
 
 interface CardProps extends Pokemon {
   isFavoriteInStorage: boolean;
-  updateAllFavorites?: (id: string) => void;
+  updateAllFavorites: (id: string) => void;
 }
 export const Card = (props: CardProps) => {
   const {

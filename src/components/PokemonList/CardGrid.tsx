@@ -20,7 +20,7 @@ export const CardGrid = (props: CardGridProps) => {
   useEffect(() => {
     //check favorites from localstorage
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
-  }, [favorites]);
+  }, []);
 
   return (
     <Stack spacing={{ base: "5", lg: "6" }}>
