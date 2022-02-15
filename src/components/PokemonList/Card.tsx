@@ -30,6 +30,7 @@ export const Card = (props: CardProps) => {
     url,
     isFavoriteInStorage,
     updateAllFavorites,
+    ...rest
   } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInStorage);
@@ -56,7 +57,7 @@ export const Card = (props: CardProps) => {
       borderRadius="lg"
       border="1px solid"
       borderColor="grey"
-      {...props}
+      {...rest}
     >
       <IconButton
         aria-label="favorite"

@@ -35,8 +35,8 @@ const Index = () => {
     <BaseLayout>
       <Box w="100%" py="8" maxW="100%" px={10}>
         <Heading fontSize={18}>Your username:</Heading>
-        <Box maxW="300px">
-          <InputGroup>
+        <Box>
+          <InputGroup maxW="350px" w="100%">
             <InputLeftElement pointerEvents="none">
               <Icon as={FiUser} color="muted" boxSize="5" />
             </InputLeftElement>

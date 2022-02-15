@@ -17,8 +17,8 @@ export const CardGrid = (props: CardGridProps) => {
     newFavorites.filter((favorite) => favorite === id);
     setFavorites(newFavorites);
   };
+
   useEffect(() => {
-    //check favorites from localstorage
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
   }, []);
 
