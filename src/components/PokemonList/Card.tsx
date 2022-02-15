@@ -19,15 +19,25 @@ const typeStyles = {
 
 interface CardProps extends Pokemon {
   isFavoriteInStorage: boolean;
+  updateAllFavorites?: (id: string) => void;
 }
 export const Card = (props: CardProps) => {
-  const { id, name, imageUrl, types, url, isFavoriteInStorage } = { ...props };
+  const {
+    id,
+    name,
+    imageUrl,
+    types,
+    url,
+    isFavoriteInStorage,
+    updateAllFavorites,
+  } = { ...props };
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInStorage);
 
   const addToFavorite = (id: string) => {
     setFavoriteToLocalStorage(id);
     setIsFavorite(isFavorite ? false : true);
+    updateAllFavorites(id);
   };
 
   useEffect(() => {

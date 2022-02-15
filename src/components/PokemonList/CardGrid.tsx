@@ -12,10 +12,15 @@ export const CardGrid = (props: CardGridProps) => {
   const { pokemons, isFavoritePage = false } = { ...props };
   const [favorites, setFavorites] = useState<Array<string>>();
 
+  const updateFavorites = (id: string): void => {
+    const newFavorites = [...favorites, id];
+    newFavorites.filter((favorite) => favorite === id);
+    setFavorites(newFavorites);
+  };
   useEffect(() => {
     //check favorites from localstorage
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
-  }, []);
+  }, [favorites]);
 
   return (
     <Stack spacing={{ base: "5", lg: "6" }}>
@@ -32,6 +37,7 @@ export const CardGrid = (props: CardGridProps) => {
               isFavoriteInStorage={
                 favorites?.includes(pokemon.id) ? true : false
               }
+              updateAllFavorites={updateFavorites}
             />
           ) : (
             !isFavoritePage && (
@@ -45,6 +51,7 @@ export const CardGrid = (props: CardGridProps) => {
                 isFavoriteInStorage={
                   favorites?.includes(pokemon.id) ? true : false
                 }
+                updateAllFavorites={updateFavorites}
               />
             )
           )
