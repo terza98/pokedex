@@ -14,6 +14,14 @@ const theme = extendTheme({
   colors: {
     black: "#16161D",
   },
+  components: {
+    Heading: {
+      baseStyle: {
+        m: 5,
+        ml: 0,
+      },
+    },
+  },
   fonts,
   breakpoints,
 });
