@@ -12,12 +12,7 @@ import { MobileFilter } from "./MobileFilter";
 
 export const FiltersWithSort = () => {
   return (
-    <Box
-      maxW="7xl"
-      mx="auto"
-      px={{ base: "4", md: "8", lg: "12" }}
-      py={{ base: "6", md: "8", lg: "12" }}
-    >
+    <Box maxW="7xl" mx="auto" px={{ base: "4", md: "8", lg: "12" }}>
       <Flex
         justify="space-between"
         align="center"
