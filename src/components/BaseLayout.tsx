@@ -2,12 +2,13 @@ import { Container } from "../components/Container";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import { Footer } from "../components/Footer";
 import PropTypes from "prop-types";
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Sidebar } from "./PokemonList/Sidebar";
 import { Navbar } from "./PokemonList/Navbar";
+import useWindowDimensions from "../hooks/useWindowDimenzions";
 
 export const BaseLayout: React.FC = ({ children }) => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
+  const { width } = useWindowDimensions();
 
   return (
     <Container>
@@ -18,7 +19,7 @@ export const BaseLayout: React.FC = ({ children }) => {
         bg="bg-canvas"
         overflowY="auto"
       >
-        {isDesktop ? <Sidebar /> : <Navbar />}
+        {width > 769 ? <Sidebar /> : <Navbar />}
         {children}
       </Flex>
       <DarkModeSwitch />
