@@ -33,7 +33,7 @@ const Index = () => {
 
   return (
     <BaseLayout>
-      <Box w="100%">
+      <Box w="100%" py="8" maxW="100%" px={10}>
         <Heading fontSize={18}>Your username:</Heading>
         <Box maxW="300px">
           <InputGroup>

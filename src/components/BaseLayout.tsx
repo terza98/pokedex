@@ -12,7 +12,6 @@ export const BaseLayout: React.FC = ({ children }) => {
   return (
     <Container>
       <Flex
-        as="section"
         maxW="1300px"
         w="100%"
         direction={{ base: "column", lg: "row" }}
