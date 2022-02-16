@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { FilterContext } from "../PokemonList/PokemonList";
 import { CheckboxFilter } from "./CheckboxFilter";
 import { FilterPopoverButton, FilterPopoverContent } from "./FilterPopover";
-import { useFilterState } from "./useFilterState";
+import { useFilterState } from "../../hooks/useFilterState";
 import { blueFilters } from "./_data";
 
 export const Filter = () => {

@@ -26,8 +26,6 @@ export const PokemonList = () => {
   const [isNotificationOpen, setNotification] = useState<boolean>(false);
   const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
 
-  //todo error handling
-  console.log(data);
   useEffect(() => {
     const newPokemons = [...pokemons];
 
@@ -44,7 +42,6 @@ export const PokemonList = () => {
         url: `/pokemon/${pokemon.id}`,
       });
     });
-    console.log(newPokemons);
 
     setPokemons(newPokemons);
   }, [loading]);
