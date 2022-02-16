@@ -17,6 +17,7 @@ import { FiSearch } from "react-icons/fi";
 import { ALL_POKEMONS } from "../../api/queries";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
+import Loading from "../Loading";
 import { CardGrid } from "./CardGrid";
 import { mockApi } from "./_data";
 
@@ -25,7 +26,7 @@ export const PokemonList = () => {
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
   //todo error handling
-
+  console.log(data);
   useEffect(() => {
     setPokemons(data?.pokemon_v2_pokemon);
   }, [loading]);
@@ -129,6 +130,7 @@ export const PokemonList = () => {
             <FilterContext.Provider value={handleFilterContextValue}>
               <FiltersWithSort />
             </FilterContext.Provider>
+            <Loading loading={loading} />
             <CardGrid pokemons={pokemons} />
           </Stack>
         </Container>
