@@ -18,11 +18,13 @@ import { ALL_POKEMONS } from "../../api/queries";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import Loading from "../Loading";
+import { NotificationWithSeparator } from "../Notifications/NotificationWithSeparator";
 import { CardGrid } from "./CardGrid";
 import { mockApi } from "./_data";
 
 export const PokemonList = () => {
   const { loading, error, data } = useQuery(ALL_POKEMONS);
+  const [isNotificationOpen, setNotification] = useState<boolean>(true);
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
   //todo error handling
@@ -30,6 +32,10 @@ export const PokemonList = () => {
   useEffect(() => {
     setPokemons(data?.pokemon_v2_pokemon);
   }, [loading]);
+
+  useEffect(() => {
+    if (error) setNotification(true);
+  }, [error]);
 
   const handleSearch = (query: string): void => {
     setPokemons(
@@ -95,6 +101,16 @@ export const PokemonList = () => {
         height="full"
       >
         <Container py="8" maxW="100%" px={10}>
+          <NotificationWithSeparator
+            isOpen={isNotificationOpen}
+            onClose={() => setNotification(false)}
+            title="There has been a problem"
+            description={
+              error?.message ||
+              "Unexpected problem has occured. Please contact us"
+            }
+            color="red"
+          />
           <Stack spacing={{ base: "8", lg: "6" }}>
             <Stack
               spacing="4"
