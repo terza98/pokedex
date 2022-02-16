@@ -32,11 +32,8 @@ export const CardGrid = (props: CardGridProps) => {
               id={pokemon.id}
               types={pokemon.types}
               name={pokemon.name}
-              url={`/pokemon/${pokemon.id}`}
-              //since I couldn't find images in their API I've used this link from official Pokedex website as an example
-              imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
-                "000" + pokemon.id
-              ).substr(-3)}.png`}
+              url={pokemon.url}
+              imageUrl={pokemon.imageUrl}
               isFavoriteInStorage={
                 favorites?.includes(pokemon.id) ? true : false
               }
@@ -49,11 +46,8 @@ export const CardGrid = (props: CardGridProps) => {
                 id={pokemon.id}
                 types={pokemon.types}
                 name={pokemon.name}
-                url={`/pokemon/${pokemon.id}`}
-                //since I couldn't find images in their API I've used this link from official Pokedex website as an example
-                imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
-                  "000" + pokemon.id
-                ).substr(-3)}.png`}
+                url={pokemon.url}
+                imageUrl={pokemon.imageUrl}
                 isFavoriteInStorage={
                   favorites?.includes(pokemon.id) ? true : false
                 }

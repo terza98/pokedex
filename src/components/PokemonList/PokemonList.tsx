@@ -20,17 +20,33 @@ import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import Loading from "../Loading";
 import { NotificationWithSeparator } from "../Notifications/NotificationWithSeparator";
 import { CardGrid } from "./CardGrid";
-import { mockApi } from "./_data";
 
 export const PokemonList = () => {
   const { loading, error, data } = useQuery(ALL_POKEMONS);
-  const [isNotificationOpen, setNotification] = useState<boolean>(true);
-  const [pokemons, setPokemons] = useState<Array<Pokemon>>();
+  const [isNotificationOpen, setNotification] = useState<boolean>(false);
+  const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
 
   //todo error handling
   console.log(data);
   useEffect(() => {
-    setPokemons(data?.pokemon_v2_pokemon);
+    const newPokemons = [...pokemons];
+
+    data?.pokemon_v2_pokemon.forEach((pokemon) => {
+      newPokemons.push({
+        name: pokemon.name,
+        id: pokemon.id,
+        experience: pokemon.base_experience,
+        types: pokemon.pokemon_v2_pokemonabilities,
+        //adding imageUrl like this since I couldn't find API endpoint which has images
+        imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
+          "000" + pokemon.id
+        ).substr(-3)}.png`,
+        url: `/pokemon/${pokemon.id}`,
+      });
+    });
+    console.log(newPokemons);
+
+    setPokemons(newPokemons);
   }, [loading]);
 
   useEffect(() => {
@@ -39,7 +55,7 @@ export const PokemonList = () => {
 
   const handleSearch = (query: string): void => {
     setPokemons(
-      mockApi.filter(
+      data?.pokemon_v2_pokemon.filter(
         (pokemon) =>
           pokemon.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
           pokemon.id.toLowerCase().indexOf(query.toLowerCase()) > -1
@@ -50,10 +66,10 @@ export const PokemonList = () => {
   const handleFilter = (types: Array<string>): void => {
     setPokemons(
       types.length > 1
-        ? mockApi.filter((pokemon) =>
+        ? data?.pokemon_v2_pokemon.filter((pokemon) =>
             pokemon.types.some((type) => types.includes(type.toLowerCase()))
           )
-        : mockApi
+        : data?.pokemon_v2_pokemon
     );
   };
 

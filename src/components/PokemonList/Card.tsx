@@ -94,11 +94,11 @@ export const Card = (props: CardProps) => {
         <Flex gap="5px">
           {types?.map((type) => (
             <Box
-              key={type}
+              key={type.pokemon_v2_ability.id}
               bg={useMemo(() => getRandomColor(), [0])}
               {...typeStyles}
             >
-              <Text color="white">{type}</Text>
+              <Text color="white">{type.pokemon_v2_ability.name}</Text>
             </Box>
           ))}
         </Flex>
