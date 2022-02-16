@@ -10,9 +10,9 @@ interface CardGridProps {
 
 export const CardGrid = (props: CardGridProps) => {
   const { pokemons, isFavoritePage = false } = { ...props };
-  const [favorites, setFavorites] = useState<Array<string>>();
+  const [favorites, setFavorites] = useState<Array<number>>();
 
-  const updateFavorites = (id: string): void => {
+  const updateFavorites = (id: number): void => {
     const newFavorites = [...favorites, id];
     newFavorites.filter((favorite) => favorite === id);
     setFavorites(newFavorites);

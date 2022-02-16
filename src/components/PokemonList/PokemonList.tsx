@@ -16,6 +16,7 @@ import { createContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { ALL_POKEMONS } from "../../api/queries";
 import { Pokemon } from "../../types/pokemon";
+import { formatPokemons } from "../../utils/helpers";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import Loading from "../Loading";
 import { NotificationWithSeparator } from "../Notifications/NotificationWithSeparator";
@@ -27,22 +28,7 @@ export const PokemonList = () => {
   const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
 
   useEffect(() => {
-    const newPokemons = [...pokemons];
-
-    data?.pokemon_v2_pokemon.forEach((pokemon) => {
-      newPokemons.push({
-        name: pokemon.name,
-        id: pokemon.id,
-        experience: pokemon.base_experience,
-        types: pokemon.pokemon_v2_pokemonabilities,
-        //adding imageUrl like this since I couldn't find API endpoint which has images
-        imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
-          "000" + pokemon.id
-        ).substr(-3)}.png`,
-        url: `/pokemon/${pokemon.id}`,
-      });
-    });
-
+    const newPokemons = formatPokemons(pokemons, data);
     setPokemons(newPokemons);
   }, [loading]);
 
