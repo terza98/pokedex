@@ -32,8 +32,10 @@ export const CardGrid = (props: CardGridProps) => {
               id={pokemon.id}
               types={pokemon.types}
               name={pokemon.name}
-              url={pokemon.url}
-              imageUrl={pokemon.imageUrl}
+              url={`/pokemon/${pokemon.id}`}
+              imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
+                "000" + pokemon.id
+              ).substr(-3)}.png`}
               isFavoriteInStorage={
                 favorites?.includes(pokemon.id) ? true : false
               }
@@ -46,8 +48,10 @@ export const CardGrid = (props: CardGridProps) => {
                 id={pokemon.id}
                 types={pokemon.types}
                 name={pokemon.name}
-                url={pokemon.url}
-                imageUrl={pokemon.imageUrl}
+                url={`/pokemon/${pokemon.id}`}
+                imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
+                  "000" + pokemon.id
+                ).substr(-3)}.png`}
                 isFavoriteInStorage={
                   favorites?.includes(pokemon.id) ? true : false
                 }

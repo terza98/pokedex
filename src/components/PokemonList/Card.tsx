@@ -86,10 +86,10 @@ export const Card = (props: CardProps) => {
       </Link>
       <Flex flexDir="column" alignItems="flex-start" w="100%" px={8} mb="10px">
         <Text color="grey" fontSize={12} fontWeight="bold">
-          {id}
+          #{id}
         </Text>
         <Text fontSize={20} mt={2}>
-          {name}
+          {name.charAt(0).toUpperCase() + name.slice(1)}
         </Text>
         <Flex gap="5px">
           {types?.map((type) => (

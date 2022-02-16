@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import {
   Box,
   Container,
@@ -13,19 +14,21 @@ import {
 } from "@chakra-ui/react";
 import { createContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { ALL_POKEMONS } from "../../api/queries";
 import { Pokemon } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import { CardGrid } from "./CardGrid";
 import { mockApi } from "./_data";
 
 export const PokemonList = () => {
+  const { loading, error, data } = useQuery(ALL_POKEMONS);
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
 
+  //todo error handling
+
   useEffect(() => {
-    setPokemons(
-      mockApi.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-    );
-  }, []);
+    setPokemons(data?.pokemon_v2_pokemon);
+  }, [loading]);
 
   const handleSearch = (query: string): void => {
     setPokemons(
