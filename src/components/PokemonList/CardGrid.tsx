@@ -28,7 +28,7 @@ export const CardGrid = (props: CardGridProps) => {
         {pokemons?.map((pokemon) =>
           isFavoritePage && favorites?.includes(pokemon.id) ? (
             <Card
-              key={pokemon.name}
+              key={pokemon.id}
               id={pokemon.id}
               types={pokemon.types}
               name={pokemon.name}
@@ -42,7 +42,7 @@ export const CardGrid = (props: CardGridProps) => {
           ) : (
             !isFavoritePage && (
               <Card
-                key={pokemon.name}
+                key={pokemon.id}
                 id={pokemon.id}
                 types={pokemon.types}
                 name={pokemon.name}

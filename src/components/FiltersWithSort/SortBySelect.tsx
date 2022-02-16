@@ -7,8 +7,11 @@ const sortByOptions = {
   options: [
     { label: "Name (A-Z)", value: "name-az" },
     { label: "Name (Z-A)", value: "name-za" },
-    { label: "Type (A-Z)", value: "type-az" },
-    { label: "Type(Z-A)", value: "type-za" },
+    { label: "Experience (Most experienced first)", value: "experience-asc" },
+    {
+      label: "Experience (The least experienced first)",
+      value: "experience-desc",
+    },
   ],
 };
 

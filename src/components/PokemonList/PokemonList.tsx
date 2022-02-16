@@ -27,6 +27,7 @@ export const PokemonList = () => {
   const [isNotificationOpen, setNotification] = useState<boolean>(false);
   const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
 
+  console.log(data);
   useEffect(() => {
     const newPokemons = formatPokemons(pokemons, data);
     setPokemons(newPokemons);
@@ -72,15 +73,15 @@ export const PokemonList = () => {
             : b.name < a.name
             ? -1
             : 0
-          : value === "type-az"
-          ? a.types > b.types
+          : value === "experience-asc"
+          ? a.experience > b.experience
             ? 1
-            : b.types > a.types
+            : b.experience > a.experience
             ? -1
             : 0
-          : value === "type-za" && a.types < b.types
+          : value === "experience-desc" && a.experience < b.experience
           ? 1
-          : b.types < a.types
+          : b.experience < a.experience
           ? -1
           : 0
       )
