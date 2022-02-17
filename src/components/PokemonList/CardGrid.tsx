@@ -1,6 +1,8 @@
 import { SimpleGrid, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Favorites } from "../../types/favorites";
 import { PokemonApi } from "../../types/pokemon";
+import { isFavorite } from "../../utils/helpers";
 import { NotificationWithSeparator } from "../Notifications/NotificationWithSeparator";
 import { Card } from "./Card";
 
@@ -11,13 +13,12 @@ interface CardGridProps {
 
 export const CardGrid = (props: CardGridProps) => {
   const { pokemons, isFavoritePage = false } = { ...props };
-  const [favorites, setFavorites] = useState<Array<number>>([]);
+  const [favorites, setFavorites] = useState<Favorites>([]);
   const [notification, setNotification] = useState<boolean>(false);
 
-  const updateFavorites = (id: number): void => {
-    const newFavorites = [...favorites, id];
-    newFavorites.filter((favorite) => favorite === id);
-    setFavorites(newFavorites);
+  const updateFavorites = (): void => {
+    // TODO: check update on favorite page
+    // setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
 
     //show success notification
     setNotification(true);
@@ -25,7 +26,7 @@ export const CardGrid = (props: CardGridProps) => {
   };
 
   useEffect(() => {
-    setFavorites(JSON.parse(localStorage.getItem("favorites")));
+    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
   }, []);
 
   return (
@@ -39,7 +40,7 @@ export const CardGrid = (props: CardGridProps) => {
       />
       <SimpleGrid columns={{ base: 1, md: 3 }} gap="6" w="100%">
         {pokemons?.map((pokemon) =>
-          isFavoritePage && favorites?.includes(pokemon.id) ? (
+          isFavoritePage && isFavorite(favorites, pokemon.id) ? (
             <Card
               key={`${pokemon.id}-${pokemon.name}`}
               id={pokemon.id}
@@ -50,9 +51,7 @@ export const CardGrid = (props: CardGridProps) => {
               imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
                 "000" + pokemon.id
               ).substr(-3)}.png`}
-              isFavoriteInStorage={
-                favorites?.includes(pokemon.id) ? true : false
-              }
+              isFavoriteInStorage={isFavorite(favorites, pokemon.id)}
               updateAllFavorites={updateFavorites}
             />
           ) : (
@@ -68,9 +67,7 @@ export const CardGrid = (props: CardGridProps) => {
                 imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
                   "000" + pokemon.id
                 ).substr(-3)}.png`}
-                isFavoriteInStorage={
-                  favorites?.includes(pokemon.id) ? true : false
-                }
+                isFavoriteInStorage={isFavorite(favorites, pokemon.id)}
                 updateAllFavorites={updateFavorites}
               />
             )

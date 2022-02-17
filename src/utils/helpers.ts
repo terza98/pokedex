@@ -1,4 +1,5 @@
 import { Ablity } from "../types/ability";
+import { Favorites } from "../types/favorites";
 import { PokemonApi } from "../types/pokemon";
 
 export const getRandomColor = (): string => {
@@ -11,16 +12,48 @@ export const getRandomColor = (): string => {
 };
 
 export const setFavoriteToLocalStorage = (id: number): void => {
-  let newFavorites = [];
-  const favorites = JSON.parse(localStorage.getItem("favorites"));
-  if (favorites) newFavorites = favorites;
+  const favorites: Favorites =
+    JSON.parse(localStorage.getItem("favorites")) || [];
+  const username: string = localStorage.getItem("username") || "";
 
-  const index = newFavorites.indexOf(id);
-  if (index > -1) {
-    newFavorites.splice(index, 1);
-  } else newFavorites.push(id);
+  const newFavorites: typeof favorites = [...favorites];
+  console.log(newFavorites.length);
+  if (newFavorites.length)
+    favorites.forEach((favorite, ind) => {
+      let favoritesArray: typeof favorite.favorites = [];
+
+      if (favorite.username === username) {
+        favoritesArray = favorite.favorites;
+        const index = favoritesArray.indexOf(id);
+        if (index > -1) {
+          favoritesArray.splice(index, 1);
+        } else favoritesArray.push(id);
+
+        //add new object to array
+        newFavorites[ind].favorites = favoritesArray;
+      } else {
+        favoritesArray.push(id);
+        newFavorites.push({
+          favorites: favoritesArray,
+          username: username,
+        });
+      }
+    });
+  else
+    newFavorites.push({
+      favorites: [id],
+      username: username,
+    });
 
   localStorage.setItem("favorites", JSON.stringify(newFavorites));
+};
+
+export const isFavorite = (favorites: Favorites, id: number): boolean => {
+  const username: string = localStorage.getItem("username") || "";
+
+  return favorites.some(
+    (it) => username === it.username && it.favorites.includes(id)
+  );
 };
 
 export const getPokemonFilters = (pokemons: PokemonApi): Array<Ablity> => {
