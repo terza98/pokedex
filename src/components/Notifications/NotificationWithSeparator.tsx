@@ -33,6 +33,7 @@ export const NotificationWithSeparator = ({
         pb="20"
         px={{ base: "4", md: "8" }}
         bg={useColorModeValue("gray.50", "inherit")}
+        position="fixed"
       >
         <Flex direction="row-reverse">
           <Notification
