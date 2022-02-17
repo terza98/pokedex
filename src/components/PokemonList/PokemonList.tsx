@@ -38,8 +38,8 @@ export const PokemonList = () => {
     setPokemons(
       data?.pokemon_v2_pokemon.filter(
         (pokemon) =>
-          pokemon.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-          pokemon.id.toLowerCase().indexOf(query.toLowerCase()) > -1
+          pokemon.name.indexOf(query) > -1 ||
+          pokemon.id.toString().indexOf(query) > -1
       )
     );
   };
