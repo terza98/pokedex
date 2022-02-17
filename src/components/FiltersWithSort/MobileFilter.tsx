@@ -7,14 +7,24 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useContext, useEffect, useState } from "react";
 import { MdFilterList } from "react-icons/md";
+import { Ablity } from "../../types/ability";
+import { getPokemonFilters } from "../../utils/helpers";
+import { FilterContext } from "../PokemonList/PokemonList";
 import { CheckboxFilter } from "./CheckboxFilter";
 import { FilterDrawer } from "./FilterDrawer";
 import { SortbySelect } from "./SortBySelect";
-import { blueFilters } from "./_data";
 
 export const MobileFilter = () => {
+  const filterContext = useContext(FilterContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [filterOptions, setFilterOptions] = useState<Array<Ablity>>();
+
+  useEffect(() => {
+    setFilterOptions(getPokemonFilters(filterContext.pokemons));
+  }, [filterContext.pokemons]);
+
   return (
     <>
       <Flex
@@ -39,7 +49,7 @@ export const MobileFilter = () => {
       </Flex>
       <FilterDrawer isOpen={isOpen} onClose={onClose}>
         <Stack spacing="6" divider={<StackDivider />}>
-          <CheckboxFilter label="Type" options={blueFilters.options} />
+          <CheckboxFilter label="Type" options={filterOptions} />
         </Stack>
       </FilterDrawer>
     </>

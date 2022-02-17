@@ -1,10 +1,10 @@
 import { SimpleGrid, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Pokemon } from "../../types/pokemon";
+import { PokemonApi } from "../../types/pokemon";
 import { Card } from "./Card";
 
 interface CardGridProps {
-  pokemons: Array<Pokemon>;
+  pokemons: PokemonApi;
   isFavoritePage?: boolean;
 }
 
@@ -28,12 +28,14 @@ export const CardGrid = (props: CardGridProps) => {
         {pokemons?.map((pokemon) =>
           isFavoritePage && favorites?.includes(pokemon.id) ? (
             <Card
-              key={pokemon.id}
+              key={`${pokemon.id}-${pokemon.name}`}
               id={pokemon.id}
-              types={pokemon.types}
+              pokemon_v2_pokemonabilities={pokemon.pokemon_v2_pokemonabilities}
               name={pokemon.name}
-              url={pokemon.url}
-              imageUrl={pokemon.imageUrl}
+              url={`/pokemon/${pokemon.id}`}
+              imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
+                "000" + pokemon.id
+              ).substr(-3)}.png`}
               isFavoriteInStorage={
                 favorites?.includes(pokemon.id) ? true : false
               }
@@ -42,12 +44,16 @@ export const CardGrid = (props: CardGridProps) => {
           ) : (
             !isFavoritePage && (
               <Card
-                key={pokemon.id}
+                key={`${pokemon.id}-${pokemon.name}`}
                 id={pokemon.id}
-                types={pokemon.types}
+                pokemon_v2_pokemonabilities={
+                  pokemon.pokemon_v2_pokemonabilities
+                }
                 name={pokemon.name}
-                url={pokemon.url}
-                imageUrl={pokemon.imageUrl}
+                url={`/pokemon/${pokemon.id}`}
+                imageUrl={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
+                  "000" + pokemon.id
+                ).substr(-3)}.png`}
                 isFavoriteInStorage={
                   favorites?.includes(pokemon.id) ? true : false
                 }

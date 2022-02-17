@@ -15,8 +15,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { ALL_POKEMONS } from "../../api/queries";
-import { Pokemon } from "../../types/pokemon";
-import { formatPokemons } from "../../utils/helpers";
+import { PokemonApi } from "../../types/pokemon";
 import { FiltersWithSort } from "../FiltersWithSort/FiltersWithSort";
 import Loading from "../Loading";
 import { NotificationWithSeparator } from "../Notifications/NotificationWithSeparator";
@@ -25,12 +24,10 @@ import { CardGrid } from "./CardGrid";
 export const PokemonList = () => {
   const { loading, error, data } = useQuery(ALL_POKEMONS);
   const [isNotificationOpen, setNotification] = useState<boolean>(false);
-  const [pokemons, setPokemons] = useState<Array<Pokemon>>([]);
+  const [pokemons, setPokemons] = useState<PokemonApi>();
 
-  console.log(data);
   useEffect(() => {
-    const newPokemons = formatPokemons(pokemons, data);
-    setPokemons(newPokemons);
+    setPokemons(data?.pokemon_v2_pokemon);
   }, [loading]);
 
   useEffect(() => {
@@ -50,10 +47,12 @@ export const PokemonList = () => {
   const handleFilter = (types: Array<string>): void => {
     setPokemons(
       types.length > 1
-        ? data?.pokemon_v2_pokemon.filter((pokemon) =>
-            pokemon.types.some((type) => types.includes(type.toLowerCase()))
+        ? data.pokemon_v2_pokemon.filter((pokemon) =>
+            pokemon.pokemon_v2_pokemonabilities.some((ability) =>
+              types.includes(ability.pokemon_v2_ability.name)
+            )
           )
-        : data?.pokemon_v2_pokemon
+        : data.pokemon_v2_pokemon
     );
   };
 
@@ -74,14 +73,14 @@ export const PokemonList = () => {
             ? -1
             : 0
           : value === "experience-asc"
-          ? a.experience > b.experience
+          ? a.base_experience > b.base_experience
             ? 1
-            : b.experience > a.experience
+            : b.base_experience > a.base_experience
             ? -1
             : 0
-          : value === "experience-desc" && a.experience < b.experience
+          : value === "experience-desc" && a.base_experience < b.base_experience
           ? 1
-          : b.experience < a.experience
+          : b.base_experience < a.base_experience
           ? -1
           : 0
       )
@@ -89,6 +88,7 @@ export const PokemonList = () => {
   };
 
   const handleFilterContextValue: AppContextInterface = {
+    pokemons: data?.pokemon_v2_pokemon,
     filter: handleFilter,
     sort: handleSort,
   };
@@ -156,6 +156,7 @@ export const PokemonList = () => {
 };
 
 interface AppContextInterface {
+  pokemons: PokemonApi;
   filter: (types: Array<string>) => void;
   sort: (value: string) => void;
 }

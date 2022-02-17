@@ -1,5 +1,4 @@
 import {
-  Box,
   Checkbox,
   CheckboxGroup,
   CheckboxGroupProps,
@@ -15,7 +14,7 @@ import { FiSearch } from "react-icons/fi";
 
 type CheckboxFilterProps = Omit<CheckboxGroupProps, "onChange"> & {
   hideLabel?: boolean;
-  options: Array<{ label: string; value: string; count?: number }>;
+  options: Array<{ name: string; id: number }>;
   label?: string;
   onChange?: (value: string[]) => void;
   spacing?: StackProps["spacing"];
@@ -56,15 +55,9 @@ export const CheckboxFilter = (props: CheckboxFilterProps) => {
         </InputGroup>
       )}
       <CheckboxGroup {...rest}>
-        {options.map((option) => (
-          <Checkbox key={option.value} value={option.value} colorScheme="blue">
-            <span>{option.label}</span>
-            {option.count != null && (
-              <Box as="span" color="gray.500" fontSize="sm">
-                {" "}
-                ({option.count})
-              </Box>
-            )}
+        {options?.map((option) => (
+          <Checkbox key={option.id} value={option.name} colorScheme="blue">
+            <span>{option.name}</span>
           </Checkbox>
         ))}
       </CheckboxGroup>

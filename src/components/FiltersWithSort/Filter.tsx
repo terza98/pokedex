@@ -1,16 +1,22 @@
 import { Popover } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../PokemonList/PokemonList";
 import { CheckboxFilter } from "./CheckboxFilter";
 import { FilterPopoverButton, FilterPopoverContent } from "./FilterPopover";
 import { useFilterState } from "../../hooks/useFilterState";
-import { blueFilters } from "./_data";
+import { Ablity } from "../../types/ability";
+import { getPokemonFilters } from "../../utils/helpers";
 
 export const Filter = () => {
   const filterContext = useContext(FilterContext);
+  const [filterOptions, setFilterOptions] = useState<Array<Ablity>>();
+
+  useEffect(() => {
+    setFilterOptions(getPokemonFilters(filterContext.pokemons));
+  }, [filterContext.pokemons]);
 
   const state = useFilterState({
-    defaultValue: blueFilters.defaultValue,
+    defaultValue: [""],
     onSubmit: filterContext.filter,
   });
   return (
@@ -25,7 +31,7 @@ export const Filter = () => {
           hideLabel
           value={state.value}
           onChange={(v) => state.onChange(v)}
-          options={blueFilters.options}
+          options={filterOptions}
         />
       </FilterPopoverContent>
     </Popover>

@@ -18,6 +18,8 @@ const typeStyles = {
 };
 
 interface CardProps extends Pokemon {
+  imageUrl: string;
+  url: string;
   isFavoriteInStorage: boolean;
   updateAllFavorites: (id: number) => void;
 }
@@ -26,7 +28,7 @@ export const Card = (props: CardProps) => {
     id,
     name,
     imageUrl,
-    types,
+    pokemon_v2_pokemonabilities,
     url,
     isFavoriteInStorage,
     updateAllFavorites,
@@ -92,9 +94,9 @@ export const Card = (props: CardProps) => {
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </Text>
         <Flex gap="5px">
-          {types?.map((type) => (
+          {pokemon_v2_pokemonabilities?.map((type) => (
             <Box
-              key={type.pokemon_v2_ability.id}
+              key={`${type.pokemon_v2_ability.id}-${name}`}
               bg={useMemo(() => getRandomColor(), [0])}
               {...typeStyles}
             >

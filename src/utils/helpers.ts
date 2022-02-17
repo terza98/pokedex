@@ -1,4 +1,5 @@
-import { Pokemon, PokemonApi } from "../types/pokemon";
+import { Ablity } from "../types/ability";
+import { PokemonApi } from "../types/pokemon";
 
 export const getRandomColor = (): string => {
   const letters = "0123456789ABCDEF";
@@ -22,25 +23,17 @@ export const setFavoriteToLocalStorage = (id: string): void => {
   localStorage.setItem("favorites", JSON.stringify(newFavorites));
 };
 
-export const formatPokemons = (
-  pokemons: Array<Pokemon>,
-  data: PokemonApi
-): Array<Pokemon> => {
-  const newPokemons = [...pokemons];
+export const getPokemonFilters = (pokemons: PokemonApi): Array<Ablity> => {
+  const pokemonFilters: Array<Ablity> = [];
 
-  data?.pokemon_v2_pokemon.forEach((pokemon) => {
-    newPokemons.push({
-      name: pokemon.name,
-      id: pokemon.id,
-      experience: pokemon.base_experience,
-      types: pokemon.pokemon_v2_pokemonabilities,
-      //adding imageUrl like this since I couldn't find API endpoint which has images
-      imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${(
-        "000" + pokemon.id
-      ).substr(-3)}.png`,
-      url: `/pokemon/${pokemon.id}`,
+  pokemons?.forEach((pokemon) => {
+    pokemon.pokemon_v2_pokemonabilities.forEach((ability) => {
+      pokemonFilters.push({
+        name: ability.pokemon_v2_ability.name,
+        id: ability.pokemon_v2_ability.id,
+      });
     });
   });
-
-  return newPokemons;
+  const ids = pokemonFilters.map((o) => o.id);
+  return pokemonFilters.filter(({ id }, index) => !ids.includes(id, index + 1));
 };
