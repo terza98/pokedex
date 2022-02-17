@@ -8,15 +8,18 @@ import {
   InputLeftElement,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useState } from "react";
 import { FiUser } from "react-icons/fi";
+import { ALL_POKEMONS } from "../api/queries";
 import { BaseLayout } from "../components/BaseLayout";
 import { CardGrid } from "../components/PokemonList/CardGrid";
-import { mockApi } from "../components/PokemonList/_data";
 import { Pokemon } from "../types/pokemon";
 
 const Index = () => {
+  const { loading, data } = useQuery(ALL_POKEMONS);
+
   const [pokemons, setPokemons] = useState<Array<Pokemon>>();
   const [username, setUsername] = useState<string>("");
 
@@ -25,10 +28,11 @@ const Index = () => {
   };
 
   useEffect(() => {
+    setPokemons(data?.pokemon_v2_pokemon);
+  }, [loading]);
+
+  useEffect(() => {
     setUsername(localStorage.getItem("username"));
-    setPokemons(
-      mockApi.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-    );
   }, []);
 
   return (

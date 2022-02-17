@@ -1,5 +1,5 @@
 import { SimpleGrid, Stack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { Favorites } from "../../types/favorites";
 import { PokemonApi } from "../../types/pokemon";
 import { isFavorite } from "../../utils/helpers";
@@ -15,10 +15,12 @@ export const CardGrid = (props: CardGridProps) => {
   const { pokemons, isFavoritePage = false } = { ...props };
   const [favorites, setFavorites] = useState<Favorites>([]);
   const [notification, setNotification] = useState<boolean>(false);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const updateFavorites = (): void => {
     // TODO: check update on favorite page
-    // setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
+    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
+    forceUpdate();
 
     //show success notification
     setNotification(true);
