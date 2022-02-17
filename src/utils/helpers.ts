@@ -10,7 +10,7 @@ export const getRandomColor = (): string => {
   return color;
 };
 
-export const setFavoriteToLocalStorage = (id: string): void => {
+export const setFavoriteToLocalStorage = (id: number): void => {
   let newFavorites = [];
   const favorites = JSON.parse(localStorage.getItem("favorites"));
   if (favorites) newFavorites = favorites;

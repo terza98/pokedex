@@ -38,7 +38,7 @@ export const Card = (props: CardProps) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInStorage);
 
   const addToFavorite = (id: number) => {
-    setFavoriteToLocalStorage(id.toString());
+    setFavoriteToLocalStorage(id);
     setIsFavorite(isFavorite ? false : true);
     updateAllFavorites(id);
   };
