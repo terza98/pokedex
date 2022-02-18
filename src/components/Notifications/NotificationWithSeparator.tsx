@@ -1,11 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { MouseEventHandler } from "react";
 import { Notification } from "./Notification";
 import { NotificationButton } from "./NotificationButton";
@@ -32,10 +25,10 @@ export const NotificationWithSeparator = ({
         pt="8"
         pb="20"
         px={{ base: "4", md: "8" }}
-        bg={useColorModeValue("gray.50", "inherit")}
+        bg="transparent"
         position="fixed"
         top={0}
-        zIndex={0}
+        zIndex={1}
       >
         <Flex direction="row-reverse">
           <Notification
