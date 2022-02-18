@@ -4,6 +4,9 @@ import apolloClient from "../../api/apollo-client";
 import { Pokemon } from "../../types/pokemon";
 import { Box, Heading, Text, Image } from "@chakra-ui/react";
 
+//for static rendering we could use getStaticProps + getStaticPaths for SSG on build time
+
+//this is pretty straightforward solution - gets called on every req
 export async function getServerSideProps(context: { query: { id: string } }) {
   const { id } = context.query;
 
