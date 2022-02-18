@@ -1,8 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const apolloClient = new ApolloClient({
-  //todo: API url should be in .env
-  uri: "https://beta.pokeapi.co/graphql/v1beta",
+  uri: process.env.NEXT_PUBLIC_API_URL,
   cache: new InMemoryCache(),
 });
 
